@@ -6,21 +6,12 @@ import (
 	"net/http"
 )
 
+const port = ":8080"
+
 func main() {
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/about", About)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		n, err := fmt.Fprintf(w, "Hello, world!")
-
-		log.Println(fmt.Sprintf("Number of bytes written: %d", n))
-
-		if err != nil {
-			log.Println(fmt.Sprintf("An error occurred: %d", err))
-		}
-	})
-
-	err := http.ListenAndServe(":8080", nil)
-
-	if err != nil {
-		log.Println(fmt.Sprintf("An error occurred: %d", err))
-	}
+	log.Println(fmt.Sprintf("Listening on port %s", port))
+	_ = http.ListenAndServe(port, nil)
 }
