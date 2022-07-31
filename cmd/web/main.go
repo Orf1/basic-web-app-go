@@ -10,15 +10,18 @@ import (
 
 const port = ":8080"
 
+// main is the application starting point
 func main() {
 	var app config.AppConfig
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
-		log.Fatal("cannot create template ceche")
+		log.Fatal("failed to create template cache")
 	}
 
 	app.TemplateCache = tc
+
+	render.NewTemplates(&app)
 
 	http.HandleFunc("/", handlers.Home)
 	http.HandleFunc("/about", handlers.About)
